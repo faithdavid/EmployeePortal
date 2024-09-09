@@ -1,0 +1,300 @@
+﻿@using EmployeePortal.web.Models
+@model IndexViewModel
+
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/dataTables.bootstrap5.min.css">
+    <script type="text/javascript" src="~/lib/datatables/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script type="text/javascript" src="~/lib/datatables/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" href="~/css/Index.css" />
+    @section Scripts {
+        <script src="~/js/EmployeeIndexView.js"></script>
+    }\
+</head>
+
+
+<div class="row mb-3">
+    <div class="col-md-8">
+        <form class="d-flex" asp-action="Index" asp-controller="Employees" method="get">
+            <div class="input-group">
+                <label for="searchType" class="form-label me-2"></label>
+                <select id="searchType" name="searchType" class="form-select me-2" aria-label="Search type">
+                    <option value="name" selected>Search by Name</option>
+                    <option value="department">Search by Department</option>
+                </select>
+                <input id="searchInput" name="searchInput" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 150px; flex-grow: 1;" />
+                <button style="background-color: #f4a460; color: #222; font-weight:bold" 
+                class="btn" type="submit">Search</button>
+                <a id="cancelButton" asp-action="Index" asp-controller="Employees" asp-route-searchString="" class="btn btn-secondary" style="display: block;">
+                    <i class="bi bi-x-large"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4 d-flex justify-content-end align-items-center">
+        <p id="toggleMode" class="btn btn-dark rounded-pill" onclick="ToggleDarkMode()">Dark Mode</p>
+    </div>
+</div>
+
+
+
+
+<div id="tableContainer" class="table-container">
+    <h1 class="d-flex justify-content-center" style="margin:0 0 50px 0; font-size:8rem">Employees</h1>
+
+
+    <form asp-action="DeleteSelected" asp-controller="Employees" method="post">
+
+        <button type="submit" id="delete-selected-btn" 
+        class="btn btn-danger mb-4" 
+        onclick="return confirm('Are you sure you wish to delete selected Students?')">
+            <i class="bi bi-trash"></i>
+            Delete Selected Employees
+        </button>
+
+
+            <table id="" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                    <th class="text-center">
+                        <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+                        Select
+                    </th>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Job Title</th>
+                        <th>Salary</th>
+                        <th>Department</th>
+                        <th>Hire Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var currentId = 0;
+                    }
+                    @foreach (var employee in Model.Employees)
+                    {
+                        currentId++;
+                        <tr>
+
+                        <td class="text-center">
+                            <label for="selectedIds" class="form-label me-2"></label>
+                            <input type="checkbox" name="selectedIds" value="@employee.Id" 
+                            class="select-employee" onchange="updateDeleteButton()">
+                        </td>
+                            <td>@currentId</td>
+                            <td>@employee.FirstName @employee.LastName</td>
+                            <td>@employee.Email.ToLower()</td>
+                            <td>@employee.JobTitle</td>
+                            <td>₦@employee.Salary.ToString("N2")</td>
+                            <td>@employee.Department</td>
+                            <td>@employee.HireDate.ToString("dd-MM-yyyy")</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a style="margin-right: 10px"
+                                       asp-action="View" asp-route-id="@employee.Id" class="btn btn-primary btn-sm px-3" title="Edit Employee">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+        
+</div>
+
+<ul id="suggestionsList" class="list-group"></ul>
+
+
+
+<script>
+
+
+    function toggleSelectAll(checkbox) {
+        const checkboxes = document.querySelectorAll('.select-employee');
+        checkboxes.forEach(checkbox => checkbox.checked = checked);
+        updateDeleteButton();
+    }
+
+    function updateDeleteButton() {
+        const deleteButton = document.getElementById('delete-selected-btn');
+        deleteButton.disabled = true; // Disable the button by default
+
+        const selectedCheckboxes = document.querySelectorAll('.select-employee:checked');
+        if (selectedCheckboxes.length > 0) {
+            deleteButton.disabled = false; // Enable the button when at least one checkbox is checked
+        }
+    }
+
+    function confirmDeletion() {
+        return confirm("Are you sure you want to delete the selected employees?");
+    }
+
+    // Call updateDeleteButton on page load to ensure initial state
+    document.addEventListener('DOMContentLoaded', () => {
+        updateDeleteButton();
+    });
+
+    // feature to toggke on or off delete selected button
+    // function updateDeleteButton() {
+    //     const selectedCheckboxes = document.querySelectorAll('.select-employee:checked');
+    //     const deleteButton = document.getElementById('delete-selected-btn');
+    //     deleteButton.disabled = selectedCheckboxes.length === 0;
+    // }
+
+    // function confirmDeletion() {
+    //     return confirm("Are you sure you want to delete the selected employees?");
+    // }
+
+
+    // // ... your existing JavaScript code ...
+
+    // Function to toggle all checkboxes
+    function toggleSelectAll(checkbox) {
+        var checked = checkbox.checked;
+        $('.select-employee').prop('checked', checked);
+        updateDeleteButton();
+    }
+
+    // // Function to update the delete button's disabled state
+    // function updateDeleteButton() {
+    //     var atLeastOneChecked = $('.select-employee:checked').length > 0;
+    //     $('#deleteAllForm').find('button').prop('disabled', !atLeastOneChecked);
+    // }
+
+    // ... other JavaScript functions ...
+</script>
+
+<script>
+
+    // const searchTypeSelect = document.getElementById("searchType");
+    // searchTypeSelect.addEventListener("change", () => {
+    //     const selectedSearchType = searchTypeSelect.value;
+    //     document.getElementById("searchTypeHidden").value = selectedSearchType;
+    // });
+
+    function addSelectedId(checkbox) {
+        const selectedIdsInput = document.getElementById('selectedEmployeeIds');
+        let currentIds = selectedIdsInput.value;
+
+        if (checkbox.checked) {
+            currentIds += ',' + checkbox.dataset.employeeId;
+        } else {
+            currentIds = currentIds.replace(',' + checkbox.dataset.employeeId, '');
+        }
+
+        selectedIdsInput.value = currentIds;
+    }
+    
+    function ToggleDarkMode() {
+        // Get references to the body, table container, and toggle button elements
+        const body = document.body;
+        const tableContainer = document.getElementById("tableContainer");
+        const toggleButton = document.getElementById("toggleMode");
+
+        // Check if the body already has the "dark-mode" class
+        if (body.classList.contains("dark-mode")) {
+            // If in dark mode, switch to light mode
+            body.classList.remove("dark-mode");
+            body.classList.add("light-mode");
+            tableContainer.classList.remove("dark-mode");
+            tableContainer.classList.add("light-mode");
+            toggleButton.textContent = "Dark Mode";
+        } else {
+            // If in light mode, switch to dark mode
+            body.classList.remove("light-mode");
+            body.classList.add("dark-mode");
+            tableContainer.classList.remove("light-mode");
+            tableContainer.classList.add("dark-mode");
+            toggleButton.textContent = "Light Mode";
+        }
+    }
+
+    // **Handle "Clear Search" button click**
+
+    const searchInput = document.getElementById("searchInput");
+    const cancelButton = document.getElementById("cancelButton");
+    const searchButton = document.querySelector('.btn-dark[type="submit"]');
+
+    // Initial state: Show cancel button if search input has value
+    if (searchInput.value.trim() !== "") {
+        cancelButton.style.display = "block";
+    }
+
+    // Attach event listeners to search input and search button
+    searchInput.addEventListener("input", () => {
+        if (searchInput.value.trim() !== "") {
+            cancelButton.style.display = "block";
+        } else {
+            cancelButton.style.display = "none";
+        }
+    });
+
+    searchButton.addEventListener("click", () => {
+        // Prevent default form submission behavior (optional)
+        //event.preventDefault();
+
+        // Don't hide the cancel button after search
+        cancelButton.style.display = "block";
+    });
+
+    function confirmDeletion(selectedIds) {
+        return confirm("Are you sure you want to delete the selected employees?");
+    }
+        
+</script>
+
+<style>
+    /* Body styles */
+    body.dark-mode {
+        background-color: #222; /* Dark mode background color */
+        color: #fff; /* Light text for dark background */
+    }
+
+    body.light-mode {
+        background-color: #fff; /* Light mode background color */
+        color: #333; /* Dark text for light background */
+    }
+
+    /* Table container styles (for dark mode) */
+    .table-container.dark-mode tr {
+        color: white; /* Inherit text color from body */
+    }
+
+    .table-container.light-mode {
+        /* Add specific styles for table elements in light mode if needed */
+        color: inherit; /* Inherit text color from body */
+    }
+
+    .table-container.dark-mode tbody tr {
+        color: white; /* Inherit text color from body */
+    }
+
+    .input-group .form-control {
+        width:90%; /* Adjust the width as needed */
+    }
+
+    .btn-delete {
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .btn-danger {
+        background-color: #ff0000; /* Change to your desired color */
+        border: 1px solid #cc0000;
+        color: #fff;
+        padding: 10px 20px;
+        cursor: pointer;
+    } 
+
+        .btn-danger:hover {
+            background-color: #dc0000; /* Darker red on hover */
+        }
+</style>

@@ -1,0 +1,52 @@
+﻿@model EmployeePortal.web.Models.UpdateEmployeeViewModel;
+
+@{
+}
+
+<h1>Update Employee</h1>
+<form method="post" action="View" class="mt-5">
+    <div class="form-group mb-3">
+        <label for="">Id</label>
+        <input type="text" class="form-control" asp-for="Id" readonly>
+    </div>
+    <div class="form-group mb-3">
+        <label for="">Date Created</label>
+        <input type="text" class="form-control" asp-for="DateCreated" readonly>
+    </div>
+    <div class="form-group mb-3">
+        <label for="">First Name</label>
+        <input type="text" class="form-control" asp-for="FirstName" placeholder="Enter your name">
+    </div>
+    <div class="form-group mb-3">
+        <label for="">Last Name</label>
+        <input type="text" class="form-control" asp-for="LastName" placeholder="Enter your name">
+    </div>
+    <div class="form-group mb-3">
+        <label for="">Email</label>
+        <input type="email" class="form-control" asp-for="Email" placeholder="Enter your email">
+    </div>
+    <div class="form-group mb-3">
+        <label for="">Salary</label>
+        <input type="number" class="form-control" asp-for="Salary" placeholder="">
+    </div>
+    <div class="form-group mb-3">
+        <label for="">Department</label>
+        <input type="text" class="form-control" asp-for="Department" placeholder="Enter your department">
+    </div>
+    <div class="form-group mb-3">
+        <label for="">Job Title</label>
+        <input type="text" class="form-control" asp-for="JobTitle" placeholder="Enter your job title">
+    </div>
+    <div class="form-group mb-3">
+        <label for="">Date Hired</label>
+        <input type="date" class="form-control" asp-for="HireDate" placeholder="Enter date hired">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-danger btn-sm px-3"
+            asp-action="Delete"
+            asp-controller="Employees">
+        Delete
+        <i class="bi bi-trash"></i>
+    </button>
+</form>

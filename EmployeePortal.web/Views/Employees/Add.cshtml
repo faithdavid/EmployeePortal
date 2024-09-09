@@ -1,0 +1,70 @@
+﻿@model EmployeePortal.web.Models.AddEmployeeViewModel;
+
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+    
+
+<body>
+
+
+<h1>Add New Employee</h1>
+<form method="post" action="Add" class="mt-5">
+
+    <div class="form-group mb-3">
+        <label style="font-weight: bold; margin-bottom:1px" for="">First Name</label>
+        <input type="text" class="form-control" asp-for="FirstName" placeholder="Enter your name">
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label style="font-weight: bold; margin-bottom:1px" for="">Last Name</label>
+        <input type="text" class="form-control" asp-for="LastName" placeholder="Enter your name">
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label style="font-weight: bold; margin-bottom:1px" for="">Email</label>
+        <input type="email" class="form-control" asp-for="Email" placeholder="Enter your email">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label style="font-weight: bold; margin-bottom:1px" for="">Department</label>
+        <input type="text" class="form-control" asp-for="Department" placeholder="Enter your department">
+        <span asp-validation-for="Department" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label style="font-weight: bold; margin-bottom:1px" for="">Salary</label>
+        <input data-val-required="The Salary field is required." type="number" class="form-control" asp-for="Salary" placeholder="">
+        <span asp-validation-for="Salary" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label style="font-weight: bold; margin-bottom:1px" for="">Job Title</label>
+        <input type="text" class="form-control" asp-for="JobTitle" placeholder="Enter your job title">
+        <span asp-validation-for="JobTitle" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label style="font-weight: bold; margin-bottom:1px" for="">Date Hired</label>
+        <input type="date" class="form-control" asp-for="HireDate" placeholder="Enter date hired">
+        <span asp-validation-for="HireDate" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+
+</form>
+
+
+</body>
+
+</html>

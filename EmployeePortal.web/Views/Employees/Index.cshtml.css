@@ -1,0 +1,75 @@
+﻿/* Body styles */
+body.dark-mode {
+    background-color: #222; /* Dark mode background color */
+    color: #fff; /* Light text for dark background */
+}
+
+body.light-mode {
+    background-color: #fff; /* Light mode background color */
+    color: #333; /* Dark text for light background */
+}
+
+/* Table container styles (for dark mode) */
+.table-container.dark-mode tr {
+    color: white; /* Inherit text color from body */
+}
+
+.table-container.light-mode {
+    /* Add specific styles for table elements in light mode if needed */
+    color: inherit; /* Inherit text color from body */
+}
+
+.table-container.dark-mode tbody tr {
+    color: white; /* Inherit text color from body */
+}
+
+/* Hover effects */
+.btn:hover {
+    transform: scale(1.02); /* Slight scale up on hover */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+    transition: all 0.2s ease-in-out; /* Smooth transition for hover effect */
+}
+
+h1 {
+    animation: bounce 3s ease-in-out infinite; /* Apply the bounce animation */
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.2); /* Subtle glow effect */
+}
+
+/* Table header styles */
+
+
+/* Table row hover effects */
+.table-container.dark-mode tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.2); /* Subtle background color on hover in dark mode */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle glow effect */
+    transform: scale(1.02); /* Slight scale up on hover */
+}
+
+.table-container.light-mode tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Subtle background color on hover in light mode */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle glow effect */
+    transform: scale(1.02); /* Slight scale up on hover */
+}
+
+/* Animation for the h1 element */
+@keyframes bounce {
+    0% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.1);
+    }
+
+    50% {
+        transform: scale(0.9);
+    }
+
+    75% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
